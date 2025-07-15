@@ -120,13 +120,13 @@
                         <i class="bi bi-people me-2"></i> Permission
                     </a>
                     <ul class="dropdown-menu w-100 mt-0 border-top-0">
+                        @can('permission.create')
                         <li>
-                            @can('permission.create')
                             <a class="dropdown-item px-4 py-2" href="{{ route('permissions.create') }}">
                                 <i class="bi bi-plus-circle me-2"></i> Create Permissions
                             </a>
-                            @endcan
                         </li>
+                        @endcan
                         @can('permission.index')
                         <li>
                             <a class="dropdown-item px-4 py-2" href="{{ route('permissions.store') }}">
@@ -144,13 +144,13 @@
                         <i class="bi bi-people me-2"></i> Users
                     </a>
                     <ul class="dropdown-menu w-100 mt-0 border-top-0">
+                        @can('user.create')
                         <li>
-                            @can('user.create')
                             <a class="dropdown-item px-4 py-2" href="{{ route('profile.create') }}">
                                 <i class="bi bi-plus-circle me-2"></i> Create Users
                             </a>
-                            @endcan
                         </li>
+                        @endcan
                         @can('user.view')
                         <li>
                             <a class="dropdown-item px-4 py-2" href="{{ route('profile.index') }}">

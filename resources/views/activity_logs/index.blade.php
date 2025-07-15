@@ -9,6 +9,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            
                             <th>User</th>
                             <th>Login Time</th>
                             <th>Logout Time</th>
