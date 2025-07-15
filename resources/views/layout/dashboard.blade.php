@@ -187,7 +187,7 @@
 
                 <!-- Static Links -->
                 @can('user.report')
-                <a class="nav-link px-4 py-3 border-bottom d-flex align-items-center" href="#">
+                <a class="nav-link px-4 py-3 border-bottom d-flex align-items-center" href="{{ route('activity-logs.index') }}">
                     <i class="bi bi-file-earmark-text me-2"></i> Reports
                 </a>
                 @endcan
