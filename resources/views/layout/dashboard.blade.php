@@ -5,10 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css" rel="stylesheet">
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     <style>
         .navbar-custom {
             background-color: #ffffff;
@@ -73,18 +79,17 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand navbar-custom sticky-top py-2">
         <div class="container-fluid px-3">
-            <!-- Sidebar Toggle Button -->
-            <button class="sidebar-toggler btn shadow-none" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#sidebar">
+            <button class="sidebar-toggler btn shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
                 <i class="bi bi-list"></i>
             </button>
 
             <!-- User Dropdown -->
             <div class="ms-auto d-flex align-items-center">
                 <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
-                        id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="d-none d-sm-inline">{{ auth()->user()->name }}</span>
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="d-none d-sm-inline">
+                            {{ auth()->check() ? auth()->user()->name : 'Guest' }}
+                        </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
                         <li>
@@ -101,7 +106,7 @@
         </div>
     </nav>
 
-    <!-- Sidebar (Offcanvas) -->
+    <!-- Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title">Menu</h5>
@@ -109,15 +114,14 @@
         </div>
         <div class="offcanvas-body">
             <nav class="nav flex-column">
-                <a class="nav-link px-4 py-3 border-bottom d-flex align-items-center"
-                    href="{{ route('profile.showProfile') }}">
+                <a class="nav-link px-4 py-3 border-bottom d-flex align-items-center" href="{{ route('profile.showProfile') }}">
                     <i class="bi bi-person-circle me-2"></i> Profile
                 </a>
-                
+
+                <!-- Permission Dropdown -->
                 <div class="nav-item dropdown">
-                    <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center"
-                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-people me-2"></i> Permission
+                    <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-lock me-2"></i> Permission
                     </a>
                     <ul class="dropdown-menu w-100 mt-0 border-top-0">
                         @can('permission.create')
@@ -129,7 +133,7 @@
                         @endcan
                         @can('permission.index')
                         <li>
-                            <a class="dropdown-item px-4 py-2" href="{{ route('permissions.store') }}">
+                            <a class="dropdown-item px-4 py-2" href="{{ route('permissions.index') }}">
                                 <i class="bi bi-list-ul me-2"></i> View Permissions
                             </a>
                         </li>
@@ -137,10 +141,9 @@
                     </ul>
                 </div>
 
-                <!-- Users Dropdown Section -->
+                <!-- Users Dropdown -->
                 <div class="nav-item dropdown">
-                    <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center"
-                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-people me-2"></i> Users
                     </a>
                     <ul class="dropdown-menu w-100 mt-0 border-top-0">
@@ -163,35 +166,33 @@
 
                 <!-- Role Dropdown -->
                 <div class="nav-item dropdown">
-                    <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center"
-                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-shield-lock me-2"></i> Role
                     </a>
                     <ul class="dropdown-menu w-100 mt-0 border-top-0">
+                        @can('role.create')
                         <li>
-                            @can('role.create')
                             <a class="dropdown-item px-4 py-2" href="{{ route('role.create') }}">
                                 <i class="bi bi-plus-circle me-2"></i> Create Role
                             </a>
-                            @endcan
                         </li>
+                        @endcan
+                        @can('role.view')
                         <li>
-                            @can('role.view')
                             <a class="dropdown-item px-4 py-2" href="{{ route('role.index') }}">
                                 <i class="bi bi-list-ul me-2"></i> View Role
                             </a>
-                            @endcan
                         </li>
+                        @endcan
                     </ul>
                 </div>
 
-                <!-- Static Links -->
+                <!-- Reports Link -->
                 @can('user.report')
                 <a class="nav-link px-4 py-3 border-bottom d-flex align-items-center" href="{{ route('activity-logs.index') }}">
                     <i class="bi bi-file-earmark-text me-2"></i> Reports
                 </a>
                 @endcan
-
             </nav>
         </div>
     </div>
@@ -201,8 +202,14 @@
         @yield('content')
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
+    <!-- JS Scripts (jQuery before Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
+    <!-- DataTables JS -->
+   <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+    <script>
+         let table = new DataTable('#table');
+    </script>
+</body>
 </html>

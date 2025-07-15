@@ -101,5 +101,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Activity Logs
     Route::middleware(['permission:user.report'])->group(function () {
         Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
+        Route::get('/activity-logs/search', [ActivityLogController::class, 'search'])->name('activity-logs.search');
     });
+    
 });
