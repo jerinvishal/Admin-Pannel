@@ -120,6 +120,7 @@
 
                 <!-- Permission Dropdown -->
                 <div class="nav-item dropdown">
+                    @can('access.permission')
                     <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-lock me-2"></i> Permission
                     </a>
@@ -139,10 +140,13 @@
                         </li>
                         @endcan
                     </ul>
+                    @endcan
                 </div>
+
 
                 <!-- Users Dropdown -->
                 <div class="nav-item dropdown">
+                    @can('access.user')
                     <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-people me-2"></i> Users
                     </a>
@@ -162,10 +166,12 @@
                         </li>
                         @endcan
                     </ul>
+                    @endcan
                 </div>
 
                 <!-- Role Dropdown -->
                 <div class="nav-item dropdown">
+                    @can('access.role')
                     <a class="nav-link px-4 py-3 border-bottom dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-shield-lock me-2"></i> Role
                     </a>
@@ -185,6 +191,7 @@
                         </li>
                         @endcan
                     </ul>
+                    @endcan
                 </div>
 
                 <!-- Reports Link -->
@@ -194,6 +201,7 @@
                 </a>
                 @endcan
             </nav>
+        
         </div>
     </div>
 
