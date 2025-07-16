@@ -90,7 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         Route::middleware(['permission:role.delete'])->group(function () {
-            Route::delete('/role/{role}', [RoleController::class, 'destroy'])->name('role.destroy');
+            Route::delete('/role/{role}', [RoleController::class,'destroy'])->name('role.destroy');
         });
     });
 
